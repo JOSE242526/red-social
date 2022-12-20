@@ -5,9 +5,9 @@ module.exports = {
         //! port: process.env.PORT ? process.env.PORT : 3000,
         port: process.env.PORT || 3000,
         host: process.env.HOST || 'http://localhost:3000/',
-        jwtSecret: process.env.JWT_SECRET,
         emailPass: process.env.MAIL_PASS,
-        mailer: process.env.MAILER
+        mailer: process.env.MAILER,
+        jwtSecret: process.env.JWT_SECRET
     },
     db: {
         host: process.env.DB_HOST,

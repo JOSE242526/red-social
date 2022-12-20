@@ -40,8 +40,8 @@ const getMyUser = (req, res) => {
 
 
 const postUser = (req, res) => {
-    const {firstName, lastName, email, password, gender, birthday} = req.body
-    userControllers.createUser({firstName, lastName, email, password,gender, birthday})
+    const {firstName, lastName, nickName, email, password, gender, birthday} = req.body
+    userControllers.createUser({firstName, lastName, nickName, email, password,gender, birthday})
         .then(async(data) => {
             await mailer.sendMail({
                 from: '<test.academlo@gmail.com>',
@@ -57,6 +57,7 @@ const postUser = (req, res) => {
             res.status(400).json({message: err.message, fields: {
                 firstName: 'String',
                 lastName: 'String',
+                nickName: 'String',
                 email: 'example@example.com',
                 password: 'String',
                 gender: 'String',
@@ -69,7 +70,6 @@ const postUser = (req, res) => {
 const patchUser = (req, res) => {
     const id = req.params.id 
     const {firstName, lastName, email, gender, birthday, role, status} = req.body
-
     userControllers.updateUser(id, {firstName, lastName, email, gender, birthday, role, status})
         .then((data) =>{
             if(data){

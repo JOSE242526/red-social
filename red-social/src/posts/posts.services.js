@@ -58,13 +58,25 @@ const patchPost = (req, res) =>{
     })
 }
 
-
-
+const deletePost = (req, res) =>{
+    const id = req.params.id
+    PostsControllers.removePosts(id)
+        .then(data =>{
+            if(data){
+                res.status(204).json(data)
+            }else{
+                res.status(404).json({message: 'Invalid Id'})
+            }
+        })
+        .catch(err =>{
+            res.status(400).json({message: message.err})
+        })
+}
 
 module.exports = {
     getAllPosts,
     getPostsById,
     postNewPosts,
-    patchPost
-
+    patchPost,
+    deletePost
 }

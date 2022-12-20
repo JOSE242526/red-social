@@ -1,4 +1,3 @@
-const Users = require('./users.models')
 const RecoveryPasswords = require('./recoveryPasswords.models')
 
 const Users = require('./users.models')
