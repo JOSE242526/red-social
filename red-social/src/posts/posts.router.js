@@ -3,6 +3,7 @@ const router = require('express').Router()
 const postServices = require('./posts.services')
 const passportJWT = require('../middlewares/auth.middleware')
 const likeServices = require('../likes/likes.services')
+const commentServices = require('../comments/comments.services')
 
 router.route('/')
     .get(postServices.getAllPosts)
@@ -16,5 +17,12 @@ router.route('/:id')
 router.route('/:id/likes')
     .get(likeServices.getAllLikesByPost)
     .post(passportJWT.authenticate('jwt', {session: false}), likeServices.postLike)
+
+router.route('/:post_id/comment')
+    .get(passportJWT.authenticate('jwt', {session: false}), commentServices.getAllComments)
+    .post(passportJWT.authenticate('jwt', {session: false}), commentServices.postComments)
+    
+
+
 
 module.exports = router

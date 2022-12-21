@@ -4,6 +4,7 @@ const Users = require('./users.models')
 const Posts = require('./posts.models')
 const Likes = require('./likes.models')
 const Follows = require('./follows.models')
+const Comments = require('./comments.models')
 
 
 const initModels = () => {
@@ -26,6 +27,14 @@ const initModels = () => {
     //?
     Users.hasMany(Follows)
     Follows.belongsTo(Users)
+
+     //? users - comments
+     Users.hasMany(Comments)
+     Comments.belongsTo(Users)
+
+    //? Posts-comments
+    Posts.hasMany(Comments)
+    Comments.belongsTo(Posts)
 }
 
 module.exports = initModels
