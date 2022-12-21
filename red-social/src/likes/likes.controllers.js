@@ -1,13 +1,18 @@
 const Likes = require('../models/likes.models')
 const uuid = require('uuid')
+const Users = require('../models/users.models')
 
 const findAllLikesFromPost = async (postId) => {
     const data = await Likes.findAll({
         where: {
             postId : postId
+        },
+        include: {
+            model: Users,
+            attributes: ['id', 'firstName', 'lastName']
         }
     })
-    return data
+    return data.map(like => like.user)
 }
 
 const createLikes = async (obj) => {
@@ -29,6 +34,6 @@ const createLikes = async (obj) => {
 }
 
 module.exports = {
-    findAllLikesFromPost,
+    findAllLikesFromPost    ,
     createLikes
 }

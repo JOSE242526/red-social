@@ -1,14 +1,13 @@
-const uuid = require('sequelize')
+const uuid = require('uuid')
 
 const Posts = require('../models/posts.models')
-const Users = require('../models/users.models')
 
-const findAllPosts = async () =>{
+const findAllPosts = async () => {
     const data = await Posts.findAll()
     return data
 }
 
-const findPostsById = async (id) => {
+const findPostById = async (id) => {
     const data = await Posts.findOne({
         where: {
             id: id
@@ -17,7 +16,7 @@ const findPostsById = async (id) => {
     return data
 }
 
-const createPosts = async (obj) =>{
+const createPost = async (obj) => {
     const data = await Posts.create({
         id: uuid.v4(),
         userId: obj.userId,
@@ -26,30 +25,33 @@ const createPosts = async (obj) =>{
     return data
 }
 
-const updatePosts = async (id, userId, obj) =>{
-    const data = await Users.update(obj, {
+const updatePost = async(id, userId, obj) => {
+    const data = await Posts.update(obj, {
         where: {
-            id: id,
+            id : id,
             userId: userId
         }
     })
     return data[0]
 }
 
-const removePosts = async (id, userId) =>{
+const removePost = async (id) => {
     const data = await Posts.destroy({
         where: {
-            id: id,
-            userId: userId
-        }  
+            id: id
+        }
     })
     return data
 }
 
+
+
+
 module.exports = {
     findAllPosts,
-    findPostsById,
-    createPosts,
-    updatePosts,
-    removePosts
+    findPostById, 
+    createPost,
+    updatePost,
+    removePost
+
 }

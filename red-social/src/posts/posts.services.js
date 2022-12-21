@@ -1,82 +1,80 @@
-const PostsControllers = require('./posts.controllers')
+const postControllers = require('./posts.controllers')
 
-const getAllPosts = (req, res) =>{
-    PostsControllers.findAllPosts()
-    .then((data) => {
-        res.status(200).json(data)
-    })
-    .catch((err) => {
-        res.status(400).json({message: err.message})
-    })
-}
-
-const getPostsById = (req, res) =>{
-    const id = req.params.id
-    PostsControllers.findPostsById(id)
-    .then((data) => {
-        if(data){
+const getAllPosts = ( req, res ) => {
+    postControllers.findAllPosts()
+        .then(data => {
             res.status(200).json(data)
-        } else {
-            res.status(404).json({message: 'Invalid ID: ' +id})
-        }
-    })
-    .catch((err) => {
-        res.status(400).json({message: err.message})
-    })
+        })
+        .catch(err => {
+            res.status(400).json({message: err.message})
+        })
 }
 
-const postNewPosts = (req, res) => {
-    const { content } = req.body
-    const userId = req.user.id
-    PostsControllers.createPosts({ userId, content })
-        .then((data) => {
+const getPostById = ( req, res ) => {
+    const id = req.params.id
+    postControllers.findPostById(id)
+        .then(data => {
+            if(data){
+                res.status(200).json(data)
+            } else {
+                res.status(404).json({message: 'Invalid ID: ' +id})
+            }
+        })
+        .catch(err => {
+            res.status(400).json({message: err.message})
+        })
+}
+
+const postNewPost = ( req, res ) => {
+    const userId = req.user.id 
+    const {content} = req.body 
+    postControllers.createPost({userId, content})
+        .then(data => {
             res.status(201).json(data)
         })
-        .catch((err) => {
-            res.status(400).json({
-                message: err.message,
-            fields: {
-                content: "text"
+        .catch(err => {
+            res.status(400).json({message: err.message, fields: {
+                content: 'text'
             }})
         })
 }
 
-const patchPost = (req, res) =>{
-    const id = req.params.id
-    const content = req.body
+const patchPost = (req, res) => {
+    const { content } = req.body
+    const id = req.params.id 
     const userId = req.user.id
-    PostsControllers.updatePosts(id, userId, {content})
-    .then(data =>{
-        if(data){
-            res.status(200).json({ message: `Post with id: ${id} edited succefully`})
-        }else{
-            res.status(400).json({message: 'Post no available'})
-        }
-    })
-    .catch((err) => {
-        res.status(400).json({message: err.message})
-    })
-}
-
-const deletePost = (req, res) =>{
-    const id = req.params.id
-    PostsControllers.removePosts(id)
-        .then(data =>{
+    postControllers.updatePost(id, userId, {content})
+        .then(data => {
             if(data){
-                res.status(204).json(data)
-            }else{
-                res.status(404).json({message: 'Invalid Id'})
+                res.status(200).json({message: `Post with id: ${id} edited successfully by the user with id: ${userId}`})
+            } else {
+                res.status(400).json({message: 'Post not available'})
             }
         })
-        .catch(err =>{
-            res.status(400).json({message: message.err})
+        .catch(err => {
+            res.status(400).json({message: err.message})
+        })
+}   
+
+const deletePost = (req, res) => {
+    const id = req.params.id 
+    postControllers.removePost(id)
+        .then(data => {
+            if(data){
+                res.status(204).json()
+            } else {
+                res.status(404).json({message: 'Invalid ID'})
+            }
+        })
+        .catch(err => {
+            res.status(400).json({message: err.message})
         })
 }
 
 module.exports = {
     getAllPosts,
-    getPostsById,
-    postNewPosts,
+    getPostById,
+    postNewPost,
     patchPost,
     deletePost
 }

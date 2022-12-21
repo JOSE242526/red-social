@@ -19,7 +19,7 @@ const getAllLikesByPost = (req, res) => {
 const postLike = (req, res) => {
     const userId = req.user.id 
     const postId = req.params.id 
-    likeControllers.createLikes({userId, postId})
+    likesControllers.createLikes({userId, postId})
         .then(data => {
             if(data){
                 res.status(201).json(data)
