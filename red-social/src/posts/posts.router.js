@@ -21,8 +21,5 @@ router.route('/:id/likes')
 router.route('/:post_id/comment')
     .get(passportJWT.authenticate('jwt', {session: false}), commentServices.getAllComments)
     .post(passportJWT.authenticate('jwt', {session: false}), commentServices.postComments)
-    
-
-
 
 module.exports = router
