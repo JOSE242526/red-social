@@ -1,5 +1,6 @@
 const userControllers = require('./users.controllers')
 const mailer = require('../utils/mailer')
+const config = require('../../config')
 //? Get, Post
 
 const getAllUsers = (req, res) => {
@@ -44,7 +45,7 @@ const postUser = (req, res) => {
     userControllers.createUser({firstName, lastName, nickName, email, password,gender, birthday})
         .then(async(data) => {
             await mailer.sendMail({
-                from: '<test.academlo@gmail.com>',
+                from: config.api.mailer,
                 to: data.email,
                 subject: `Bienvenido ${data.firstName}`,
                 html: `<h1>Bienvenido a nuestra app ${data.firstName}</h1> <a href="#" class="myButton">turquoise</a> `,
