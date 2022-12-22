@@ -1,0 +1,31 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Social API Academlo",
+        "description": "En este proyecto creado con express, manejamos una API de una red social sencilla",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:9000/api/v1"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "summary": "Retorna una lista de Usuarios",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios"
+                    },
+                    "400":{
+                        "description": "Error de sequelize"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crea un nuevo usuario"
+            }
+        }
+    }
+}
